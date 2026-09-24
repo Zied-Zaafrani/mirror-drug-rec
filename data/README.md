@@ -12,18 +12,19 @@ data. The two preparation scripts write each cohort to `data/processed/<cohort>/
 | [MIMIC-IV v3.1](https://physionet.org/content/mimiciv/3.1/) | `mimic4_*` | `hosp/` tables, and `icu/icustays.csv.gz` for the intensive-care cohort |
 | [MIMIC-IV-Note v2.2](https://physionet.org/content/mimic-iv-note/2.2/) | `mimic4_*` | `discharge.csv.gz`, placed in the MIMIC-IV folder or in its `note/` sub-folder |
 
-Four drug reference files map prescriptions to drug classes and give their
-structures and interactions. Three are the public mapping files of the
-[SafeDrug repository](https://github.com/ycq091044/SafeDrug), used unchanged
-under the names below; the fourth is included here. Put all four in one folder
-(this `data/` folder works):
+This folder holds the four drug reference files that map prescriptions to drug
+classes and give their structures and interactions. Three are public files of
+earlier medication recommendation repositories, copied unchanged under new names:
 
 | File | Holds | Source |
 |---|---|---|
-| `ndc_to_rxnorm.txt` | NDC product code to RxNorm concept | SafeDrug `data/input/ndc2RXCUI.txt` |
-| `rxnorm_to_atc.csv` | RxNorm concept to ATC class | SafeDrug `data/input/RXCUI2atc4.csv` |
-| `atc3_structures.pkl` | ATC-3 class to the SMILES string of its drugs | SafeDrug `data/output/atc3toSMILES.pkl` |
-| `atc3_interactions.csv` | interacting ATC-3 pairs from TWOSIDES | included in this folder |
+| `ndc_to_rxnorm.txt` | NDC product code to RxNorm concept | `ndc2RXCUI.txt` of [SafeDrug](https://github.com/ycq091044/SafeDrug), from [GAMENet](https://github.com/sjy1203/GAMENet) (MIT) |
+| `rxnorm_to_atc.csv` | RxNorm concept to ATC class | `RXCUI2atc4.csv` of SafeDrug, from GAMENet (MIT) |
+| `atc3_structures.pkl` | ATC-3 class to the SMILES strings of its drugs | `idx2SMILES.pkl` of [MoleRec](https://github.com/yangnianzu0515/MoleRec) (MIT) |
+| `atc3_interactions.csv` | interacting ATC-3 pairs, from TWOSIDES | built for this work |
+
+With these files, `preprocess.py` rebuilds the MIMIC-III cohort of the paper
+exactly: the same 6,350 patients, 131 drug classes and interaction matrix.
 
 ## Preparing a cohort
 

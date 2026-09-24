@@ -1,0 +1,147 @@
+{
+  "cohort": "mimic4_hospital",
+  "variant": "codes_only_no_graph",
+  "seed": 123,
+  "metrics": {
+    "jaccard": 0.4690636694431305,
+    "f1": 0.6216191053390503,
+    "average_precision": 0.7065987878385297,
+    "interaction_rate": 0.09860426714985647,
+    "drugs_recommended": 12.964506149291992,
+    "drugs_recorded": 11.98686408996582,
+    "precision": 0.6154091358184814,
+    "recall": 0.6840419769287109,
+    "change_started": 0.20965686440467834,
+    "change_stopped": 0.31894412636756897
+  },
+  "validation_jaccard": 0.4704972505569458,
+  "baseline": {
+    "jaccard": 0.4153413474559784,
+    "f1": 0.5652332901954651,
+    "average_precision": 0.40618496619933797,
+    "interaction_rate": 0.10060895781839911,
+    "precision": 0.5993236899375916,
+    "recall": 0.5987259149551392,
+    "drugs_recommended": 11.947368621826172,
+    "drugs_recorded": 11.98686408996582,
+    "change_started": 0.0,
+    "change_stopped": 0.0
+  },
+  "threshold_sweep": {
+    "0.4": {
+      "jaccard": 0.467743,
+      "drugs_recommended": 13.570596,
+      "interaction_rate": 0.096136
+    },
+    "0.45": {
+      "jaccard": 0.468507,
+      "drugs_recommended": 13.260201,
+      "interaction_rate": 0.097404
+    },
+    "0.5": {
+      "jaccard": 0.469064,
+      "drugs_recommended": 12.964506,
+      "interaction_rate": 0.098604
+    },
+    "0.55": {
+      "jaccard": 0.469686,
+      "drugs_recommended": 12.687168,
+      "interaction_rate": 0.099889
+    },
+    "0.6": {
+      "jaccard": 0.469848,
+      "drugs_recommended": 12.394867,
+      "interaction_rate": 0.101335
+    },
+    "0.65": {
+      "jaccard": 0.469612,
+      "drugs_recommended": 12.106394,
+      "interaction_rate": 0.102498
+    },
+    "0.7": {
+      "jaccard": 0.469922,
+      "drugs_recommended": 11.801044,
+      "interaction_rate": 0.103785
+    },
+    "0.75": {
+      "jaccard": 0.469159,
+      "drugs_recommended": 11.472118,
+      "interaction_rate": 0.105208
+    }
+  },
+  "tier_metrics": {
+    "jaccard_rare": 0.2887498140335083,
+    "drugs_rare": 96,
+    "jaccard_moderate": 0.3916251063346863,
+    "drugs_moderate": 28,
+    "jaccard_universal": 0.6982325911521912,
+    "drugs_universal": 6
+  },
+  "partition_sizes": {
+    "train": {
+      "patients": 20130,
+      "instances": 45584
+    },
+    "validation": {
+      "patients": 5033,
+      "instances": 11449
+    },
+    "test": {
+      "patients": 5033,
+      "instances": 11495
+    }
+  },
+  "parameter_counts": {
+    "visit_encoder": {
+      "total": 4327681,
+      "trainable": 827905
+    },
+    "drug_gnn": {
+      "total": 164736,
+      "trainable": 164736
+    },
+    "predictor": {
+      "total": 379653,
+      "trainable": 379651
+    },
+    "model_total": {
+      "total": 4987270,
+      "trainable": 1487492
+    }
+  },
+  "timings": {
+    "training_seconds": 8249.09,
+    "seconds_per_epoch": 98.2,
+    "epochs_run": 84,
+    "prediction_seconds": 20.434,
+    "milliseconds_per_instance": 1.778
+  },
+  "config": {
+    "cohort": {
+      "name": "mimic4_hospital"
+    },
+    "model": {
+      "hidden_dim": 128,
+      "use_notes": false,
+      "use_labs": false,
+      "use_copy_head": false,
+      "use_visit_selection": true,
+      "use_graph_relations": false
+    },
+    "training": {
+      "bce_weight": 0.3,
+      "jaccard_weight": 1.5,
+      "margin_weight": 0.05,
+      "interaction_weight": 0.2
+    },
+    "seed": 123
+  },
+  "environment": {
+    "python": "3.12",
+    "torch": "2.1",
+    "device": "cuda",
+    "gpu": "Tesla T4"
+  },
+  "schema_version": 1,
+  "written_at": "2026-09-24T10:18:43+00:00"
+}

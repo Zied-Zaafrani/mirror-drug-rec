@@ -1,0 +1,75 @@
+# Settings of the reported system. Flags of src/train.py override single values.
+
+model:
+  hidden_dim: 128               # width of every internal representation
+  code_embedding_dim: 768       # PubMedBERT output width for code descriptions
+  note_embedding_dim: 768       # Bio_ClinicalBERT output width for discharge notes
+  encoder_layers: 2             # transformer layers over the visit sequence
+  attention_heads: 4            # heads in every multi-head attention block
+  note_projection_dim: 64       # width of the note channel inside the fusion block
+  lab_projection_dim: null      # null means hidden_dim / 4
+  graph_layers: 2               # message-passing layers over the drug graph
+  morgan_bits: 256              # length of the molecular fingerprint per drug
+  morgan_radius: 2              # neighbourhood radius of the fingerprint
+  relation_count: 4             # interaction, co-prescription, self-loop, drug class
+  max_visits: 30                # largest admission count the position tables cover
+  dropout: 0.3
+  gradient_clip: 1.0
+  selection_temperature: 0.6    # temperature of the visit-selection sampling
+  attention_temperature: 20.0   # temperature of the visit-attention softmax
+  use_notes: true               # set false for the no-note ablation
+  use_labs: true                # set false for the no-laboratory ablation
+  use_copy_head: true           # set false for the no-copy-head ablation
+  use_visit_selection: true     # set false to average all past visits instead
+  use_graph_relations: true     # set false for the self-loops-only graph ablation
+
+training:
+  epochs: 120
+  batch_size: 64
+  learning_rate: 5.0e-4
+  min_learning_rate: 1.0e-4     # floor for the plateau scheduler
+  weight_decay: 1.0e-5
+  lr_patience: 8                # epochs without validation gain before the rate drops
+  lr_factor: 0.5
+  early_stopping_patience: 20
+  bce_weight: 0.3               # weight of the per-drug cross-entropy term
+  jaccard_weight: 1.5           # weight of the differentiable overlap term
+  margin_weight: 0.05           # weight of the multi-label margin term
+  interaction_weight: 0.2       # weight of the drug-interaction penalty
+  positive_weight_cap: 5.0      # upper clip of the per-drug positive weight
+  positive_weight_floor: 0.1    # lower clip of the per-drug positive weight
+  decision_threshold: 0.5       # probability above which a drug is recommended
+  dataloader_workers: 0
+  seeds: [42, 123, 456, 789, 1024]
+
+# One entry per cohort. `directory` is the folder under --data_dir that holds
+# its processed files.
+cohorts:
+  mimic3:
+    description: MIMIC-III benchmark cohort, ICD-9 coded, 131 drug classes
+    directory: mimic3
+    source: mimic3
+    diagnosis_revisions: [icd9]
+    admission_order: time
+    minimum_admissions: 1
+  mimic4_icu:
+    description: MIMIC-IV intensive-care cohort following the published single-revision protocol
+    directory: mimic4_icu
+    source: mimic4
+    diagnosis_revisions: [icd9]
+    admission_order: identifier
+    minimum_admissions: 2
+  mimic4_hospital:
+    description: MIMIC-IV hospital-wide cohort restricted to ICD-9 coded admissions
+    directory: mimic4_hospital
+    source: mimic4
+    diagnosis_revisions: [icd9]
+    admission_order: identifier
+    minimum_admissions: 2
+  mimic4_mixed:
+    description: MIMIC-IV hospital-wide cohort keeping both ICD-9 and ICD-10 admissions
+    directory: mimic4_mixed
+    source: mimic4
+    diagnosis_revisions: [icd9, icd10]
+    admission_order: identifier
+    minimum_admissions: 2

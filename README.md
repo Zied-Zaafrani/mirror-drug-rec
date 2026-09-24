@@ -45,8 +45,8 @@ MIMIC-III and MIMIC-IV must be obtained from PhysioNet;
 
 ```bash
 # 1. Build a cohort from the raw tables (once per cohort)
-python src/preprocess.py --cohort mimic3 --mimic_dir /data/mimic-iii-1.4 --drug_reference_dir /data/drug-reference
-python src/features.py   --cohort mimic3 --mimic_dir /data/mimic-iii-1.4 --drug_reference_dir /data/drug-reference --device cuda
+python src/preprocess.py --cohort mimic3 --mimic_dir /data/mimic-iii-1.4 --drug_reference_dir data
+python src/features.py   --cohort mimic3 --mimic_dir /data/mimic-iii-1.4 --drug_reference_dir data --device cuda
 
 # 2. Train and evaluate (writes results/mimic3/full/result_mimic3_full_seed42.json)
 python src/train.py --cohort mimic3 --seed 42 --save_model model.pt
@@ -90,13 +90,8 @@ train/validation/test partitions match the reported runs before training.
 
 ## Citation
 
-```bibtex
-@article{zaafrani2026mirror,
-  title  = {{MIRROR}: Multimodal Integration for Drug Recommendation from Electronic Health Records},
-  author = {Zaafrani, Zied and Ben Sassi, Dhekra and Mokni, Raouia},
-  year   = {2026}
-}
-```
+The paper is under review. Citation details will be added here once it is
+published.
 
 ## License
 
